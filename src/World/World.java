@@ -7,6 +7,7 @@ public class World {
     private Rectangle world;
     private Player p1;
     private Cell[] cellArea = new Cell[3600];
+    private Obstacle obstacle
 
     public World() {
         world = new Rectangle(10,10,600,600);
