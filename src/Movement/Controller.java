@@ -1,9 +1,10 @@
+package Movement;
+
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
-
-import java.security.Key;
+import Player.Player;
 
 public class Controller implements KeyboardHandler {
     private Keyboard keyboard;
@@ -41,16 +42,16 @@ public class Controller implements KeyboardHandler {
     public void keyPressed(KeyboardEvent keyboardEvent) {
         switch (keyboardEvent.getKey()){
             case KeyboardEvent.KEY_UP:
-                p1.translate(0,-10);
+                p1.moveUp(-10);
                 break;
             case KeyboardEvent.KEY_DOWN:
-                p1.translate(0,10);
+                p1.moveDown(10);
                 break;
             case KeyboardEvent.KEY_RIGHT:
-                p1.translate(10,0);
+                p1.moveRight(10);
                 break;
             case KeyboardEvent.KEY_LEFT:
-                p1.translate(-10,0);
+                p1.moveLeft(-10);
                 break;
         }
     }
