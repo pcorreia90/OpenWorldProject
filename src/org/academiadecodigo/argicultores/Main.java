@@ -1,8 +1,8 @@
-import World.World;
+package org.academiadecodigo.argicultores;
 
 public class Main {
     public static void main(String[] args) {
-        World start = new World();
+        Game start = new Game();
 
 
     }

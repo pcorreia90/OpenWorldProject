@@ -1,19 +1,33 @@
-package Movement;
+package org.academiadecodigo.argicultores;
 
+import org.academiadecodigo.argicultores.World.Obstacle;
+import org.academiadecodigo.argicultores.World.World;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
-import Player.Player;
+import org.academiadecodigo.argicultores.Player.Player;
 
-public class Controller implements KeyboardHandler {
+public class Game implements KeyboardHandler {
+    private World world;
     private Keyboard keyboard;
     private Player p1;
+    private Obstacle obstacle;
 
-    public Controller (Player p1){
+    public Game(){
+        world = new World();
         keyboard = new Keyboard(this);
-        this.p1 = p1;
+        p1 = new Player(300,300,20,20);
+        p1.fill();
+        obstacle = new Obstacle(400,400);
+        obstacle.fill();
         keyListener();
+    }
+
+    public void colisionDetector() {
+        if(p1.getX() + 20 == obstacle.getX() && p1.getY() >= obstacle.getY() - 10){
+            p1.moveRight(0);
+        }
     }
 
     public void keyListener(){
@@ -40,17 +54,29 @@ public class Controller implements KeyboardHandler {
 
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
+        System.out.println(p1.getX());
+        System.out.println(obstacle.getX());
         switch (keyboardEvent.getKey()){
             case KeyboardEvent.KEY_UP:
+                if(p1.getX() == obstacle.getX() && p1.getY() - 20 == obstacle.getY()){
+                    return;
+                }
                 p1.moveUp(-10);
                 break;
             case KeyboardEvent.KEY_DOWN:
+                if(p1.getX() == obstacle.getX() && p1.getY() + 20 == obstacle.getY()){
+                    return;
+                }
                 p1.moveDown(10);
                 break;
             case KeyboardEvent.KEY_RIGHT:
+                colisionDetector();
                 p1.moveRight(10);
                 break;
             case KeyboardEvent.KEY_LEFT:
+                if(p1.getX() - 20 == obstacle.getX() && p1.getY() == obstacle.getY()){
+                    return;
+                }
                 p1.moveLeft(-10);
                 break;
         }

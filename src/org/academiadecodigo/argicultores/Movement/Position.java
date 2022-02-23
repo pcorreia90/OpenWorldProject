@@ -1,4 +1,4 @@
-package Movement;
+package org.academiadecodigo.argicultores.Movement;
 
 public class Position {
     private int x;

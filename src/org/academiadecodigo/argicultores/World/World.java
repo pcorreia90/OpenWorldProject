@@ -1,19 +1,15 @@
-package World;
+package org.academiadecodigo.argicultores.World;
 
-import Player.Player;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 public class World {
     private Rectangle world;
-    private Player p1;
     private Cell[] cellArea = new Cell[3600];
-    private Obstacle obstacle
+
 
     public World() {
         world = new Rectangle(10,10,600,600);
         world.draw();
-        p1 = new Player(300,300,20,20);
-        p1.fill();
         drawCells();
     }
 
@@ -25,7 +21,7 @@ public class World {
                 x = 10;
                 y += 10;
             }
-            cellArea[i] = new Cell(x,y);
+            cellArea[i] = new Cell(x,y,10,10);
             cellArea[i].draw();
             x += 10;
         }
