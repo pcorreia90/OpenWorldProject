@@ -8,11 +8,16 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.argicultores.Player.Player;
 
+import java.util.HashMap;
+
 public class Game implements KeyboardHandler {
     private World world;
     private Keyboard keyboard;
     private Player p1;
     private Obstacle obstacle;
+    private Obstacle obstacle2;
+    private HashMap<Integer,Obstacle> obstacleList = new HashMap();
+
 
     public Game(){
         world = new World();
@@ -20,14 +25,33 @@ public class Game implements KeyboardHandler {
         p1 = new Player(300,300,20,20);
         p1.fill();
         obstacle = new Obstacle(400,400);
+        obstacle2 = new Obstacle(400,300);
+        obstacleList.put(400,obstacle);
+        obstacleList.put(400,obstacle2);
         obstacle.fill();
+        obstacle2.fill();
         keyListener();
     }
 
-    public void colisionDetector() {
-        if(p1.getX() + 20 == obstacle.getX() && p1.getY() >= obstacle.getY() - 10){
-            p1.moveRight(0);
+    public int collisionDetector() {
+        if (!obstacleList.containsKey(p1.getX() + 20)){
+            return -1;
         }
+        //Collision from the left
+        if(p1.getX() + 20 == obstacleList.get(p1.getX() + 20).getX() && p1.getY() == obstacleList.get(p1.getX() + 20).getY() - 10 || p1.getX() + 20 == obstacleList.get(p1.getX() + 20).getX() && p1.getY() == obstacleList.get(p1.getX() + 20).getY() || p1.getX() + 20 == obstacleList.get(p1.getX() + 20).getX() && p1.getY() == obstacleList.get(p1.getX() + 20).getY() + 10) {
+            return 1;
+        //Collision from down
+        } else if (p1.getX() == obstacle.getX() && p1.getY() - 20 == obstacle.getY() || p1.getX() == obstacle.getX() - 10 && p1.getY() - 20 == obstacle.getY() || p1.getX() == obstacle.getX() + 10 && p1.getY() - 20 == obstacle.getY()) {
+            return 2;
+        //Collision from right
+        } else if (p1.getX() - 20 == obstacle.getX() && p1.getY() == obstacle.getY() - 10 || p1.getX() - 20 == obstacle.getX() && p1.getY() == obstacle.getY() || p1.getX() - 20 == obstacle.getX() && p1.getY() == obstacle.getY() + 10) {
+            return 3;
+        //Collision from up
+        } else if (p1.getX() == obstacle.getX() && p1.getY() + 20 == obstacle.getY() || p1.getX() == obstacle.getX() - 10 && p1.getY() + 20 == obstacle.getY() || p1.getX() == obstacle.getX() + 10 && p1.getY() + 20 == obstacle.getY()) {
+            return 4;
+        }
+        return 0;
+
     }
 
     public void keyListener(){
@@ -58,23 +82,29 @@ public class Game implements KeyboardHandler {
         System.out.println(obstacle.getX());
         switch (keyboardEvent.getKey()){
             case KeyboardEvent.KEY_UP:
-                if(p1.getX() == obstacle.getX() && p1.getY() - 20 == obstacle.getY()){
+                if(collisionDetector() == 2){
+                    p1.moveUp(0);
                     return;
                 }
                 p1.moveUp(-10);
                 break;
             case KeyboardEvent.KEY_DOWN:
-                if(p1.getX() == obstacle.getX() && p1.getY() + 20 == obstacle.getY()){
+                if(collisionDetector() == 4){
+                    p1.moveDown(0);
                     return;
                 }
                 p1.moveDown(10);
                 break;
             case KeyboardEvent.KEY_RIGHT:
-                colisionDetector();
+                if(collisionDetector() == 1){
+                    p1.moveRight(0);
+                    return;
+                };
                 p1.moveRight(10);
                 break;
             case KeyboardEvent.KEY_LEFT:
-                if(p1.getX() - 20 == obstacle.getX() && p1.getY() == obstacle.getY()){
+                if(collisionDetector() == 3){
+                    p1.moveLeft(0);
                     return;
                 }
                 p1.moveLeft(-10);
