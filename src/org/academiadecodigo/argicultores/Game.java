@@ -1,6 +1,7 @@
 package org.academiadecodigo.argicultores;
 
-import org.academiadecodigo.argicultores.World.Obstacle;
+import org.academiadecodigo.argicultores.Movement.Position;
+import org.academiadecodigo.argicultores.World.GameObject;
 import org.academiadecodigo.argicultores.World.World;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
@@ -14,9 +15,9 @@ public class Game implements KeyboardHandler {
     private World world;
     private Keyboard keyboard;
     private Player p1;
-    private Obstacle obstacle;
-    private Obstacle obstacle2;
-    private HashMap<Integer,Obstacle> obstacleList = new HashMap();
+    private GameObject obstacle;
+    private GameObject obstacle2;
+    private HashMap<Position, GameObject> obstacleList = new HashMap();
 
 
     public Game(){
@@ -24,10 +25,10 @@ public class Game implements KeyboardHandler {
         keyboard = new Keyboard(this);
         p1 = new Player(300,300,20,20);
         p1.fill();
-        obstacle = new Obstacle(400,400);
-        obstacle2 = new Obstacle(400,300);
-        obstacleList.put(400,obstacle);
-        obstacleList.put(400,obstacle2);
+        obstacle = new GameObject(400,400);
+        obstacle2 = new GameObject(400,300);
+        obstacleList.put(obstacle.getPos(),obstacle);
+        obstacleList.put(obstacle2.getPos(), obstacle2);
         obstacle.fill();
         obstacle2.fill();
         keyListener();
