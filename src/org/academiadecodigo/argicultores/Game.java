@@ -1,6 +1,7 @@
 package org.academiadecodigo.argicultores;
 
-import org.academiadecodigo.argicultores.World.Obstacle;
+import org.academiadecodigo.argicultores.Movement.Position;
+import org.academiadecodigo.argicultores.World.GameObject;
 import org.academiadecodigo.argicultores.World.World;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
@@ -14,9 +15,9 @@ public class Game implements KeyboardHandler {
     private World world;
     private Keyboard keyboard;
     private Player p1;
-    private Obstacle obstacle;
-    private Obstacle obstacle2;
-    private HashMap<Integer,Obstacle> obstacleList = new HashMap();
+    private GameObject obstacle;
+    private GameObject obstacle2;
+    private HashMap<Integer, GameObject> obstacleList = new HashMap();
 
 
     public Game(){
@@ -24,34 +25,37 @@ public class Game implements KeyboardHandler {
         keyboard = new Keyboard(this);
         p1 = new Player(300,300,20,20);
         p1.fill();
-        obstacle = new Obstacle(400,400);
-        obstacle2 = new Obstacle(400,300);
-        obstacleList.put(400,obstacle);
-        obstacleList.put(400,obstacle2);
+        obstacle = new GameObject(400,400);
+        obstacle2 = new GameObject(400,300);
+        System.out.println(obstacle2.getPos());
+        obstacleList.put(obstacle.getPos(),obstacle);
+        obstacleList.put(obstacle2.getPos(), obstacle2);
+        System.out.println(obstacleList.get(obstacle2.getPos()).getPos());
         obstacle.fill();
         obstacle2.fill();
         keyListener();
     }
 
-    public int collisionDetector() {
-        if (!obstacleList.containsKey(p1.getX() + 20)){
+   public int collisionDetector() {
+        if(!obstacleList.containsKey(p1.getPos())){
+            System.out.println("hello");
             return -1;
         }
         //Collision from the left
-        if(p1.getX() + 20 == obstacleList.get(p1.getX() + 20).getX() && p1.getY() == obstacleList.get(p1.getX() + 20).getY() - 10 || p1.getX() + 20 == obstacleList.get(p1.getX() + 20).getX() && p1.getY() == obstacleList.get(p1.getX() + 20).getY() || p1.getX() + 20 == obstacleList.get(p1.getX() + 20).getX() && p1.getY() == obstacleList.get(p1.getX() + 20).getY() + 10) {
+        if(p1.getPos() + 20 == obstacleList.get(p1.getPos() + 20).getPos()) {
+            System.out.println("im here");
             return 1;
         //Collision from down
-        } else if (p1.getX() == obstacle.getX() && p1.getY() - 20 == obstacle.getY() || p1.getX() == obstacle.getX() - 10 && p1.getY() - 20 == obstacle.getY() || p1.getX() == obstacle.getX() + 10 && p1.getY() - 20 == obstacle.getY()) {
+     /*   } else if (p1.getX() == obstacle.getX() && p1.getY() - 20 == obstacle.getY() || p1.getX() == obstacle.getX() - 10 && p1.getY() - 20 == obstacle.getY() || p1.getX() == obstacle.getX() + 10 && p1.getY() - 20 == obstacle.getY()) {
             return 2;
         //Collision from right
         } else if (p1.getX() - 20 == obstacle.getX() && p1.getY() == obstacle.getY() - 10 || p1.getX() - 20 == obstacle.getX() && p1.getY() == obstacle.getY() || p1.getX() - 20 == obstacle.getX() && p1.getY() == obstacle.getY() + 10) {
             return 3;
         //Collision from up
         } else if (p1.getX() == obstacle.getX() && p1.getY() + 20 == obstacle.getY() || p1.getX() == obstacle.getX() - 10 && p1.getY() + 20 == obstacle.getY() || p1.getX() == obstacle.getX() + 10 && p1.getY() + 20 == obstacle.getY()) {
-            return 4;
+            return 4;*/
         }
         return 0;
-
     }
 
     public void keyListener(){
@@ -78,8 +82,6 @@ public class Game implements KeyboardHandler {
 
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
-        System.out.println(p1.getX());
-        System.out.println(obstacle.getX());
         switch (keyboardEvent.getKey()){
             case KeyboardEvent.KEY_UP:
                 if(collisionDetector() == 2){
@@ -101,6 +103,7 @@ public class Game implements KeyboardHandler {
                     return;
                 };
                 p1.moveRight(10);
+                System.out.println(p1.getPos());
                 break;
             case KeyboardEvent.KEY_LEFT:
                 if(collisionDetector() == 3){
