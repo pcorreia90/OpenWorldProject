@@ -9,15 +9,16 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.argicultores.Player.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Game implements KeyboardHandler {
     private World world;
     private Keyboard keyboard;
     private Player p1;
     private GameObject obstacle;
-    private GameObject obstacle2;
-    private HashMap<Integer, GameObject> obstacleList = new HashMap();
+    private ArrayList<GameObject> obstacleList = new ArrayList();
 
 
     public Game(){
@@ -26,37 +27,44 @@ public class Game implements KeyboardHandler {
         p1 = new Player(300,300,20,20);
         p1.fill();
         obstacle = new GameObject(400,400);
-        obstacle2 = new GameObject(400,300);
-        System.out.println(obstacle2.getPos());
-        obstacleList.put(obstacle.getPos(),obstacle);
-        obstacleList.put(obstacle2.getPos(), obstacle2);
-        System.out.println(obstacleList.get(obstacle2.getPos()).getPos());
+        obstacleList.add(obstacle);
         obstacle.fill();
-        obstacle2.fill();
         keyListener();
     }
 
    public int collisionDetector() {
-        if(!obstacleList.containsKey(p1.getPos())){
-            System.out.println("hello");
-            return -1;
-        }
-        //Collision from the left
-        if(p1.getPos() + 20 == obstacleList.get(p1.getPos() + 20).getPos()) {
-            System.out.println("im here");
-            return 1;
-        //Collision from down
-     /*   } else if (p1.getX() == obstacle.getX() && p1.getY() - 20 == obstacle.getY() || p1.getX() == obstacle.getX() - 10 && p1.getY() - 20 == obstacle.getY() || p1.getX() == obstacle.getX() + 10 && p1.getY() - 20 == obstacle.getY()) {
-            return 2;
-        //Collision from right
-        } else if (p1.getX() - 20 == obstacle.getX() && p1.getY() == obstacle.getY() - 10 || p1.getX() - 20 == obstacle.getX() && p1.getY() == obstacle.getY() || p1.getX() - 20 == obstacle.getX() && p1.getY() == obstacle.getY() + 10) {
-            return 3;
-        //Collision from up
-        } else if (p1.getX() == obstacle.getX() && p1.getY() + 20 == obstacle.getY() || p1.getX() == obstacle.getX() - 10 && p1.getY() + 20 == obstacle.getY() || p1.getX() == obstacle.getX() + 10 && p1.getY() + 20 == obstacle.getY()) {
-            return 4;*/
-        }
-        return 0;
-    }
+       for (GameObject object : obstacleList) {
+           //Collision from the left
+           if (p1.xPlusWidth() == object.getX()) {
+               if (p1.getY() >= object.getY() - 10  && p1.getY() <= object.yPlusHeight() - 10) {
+                   System.out.println("from left");
+                   return 1;
+               }
+           }
+           //Collision from down
+           if (p1.getY() == object.yPlusHeight()) {
+               if (p1.getX() >= object.getX() - 10 && p1.getX() <= object.xPlusWidth() - 10) {
+                   System.out.println("from Down");
+                   return 2;
+               }
+           }
+           //Collision from up
+           if (p1.xPlusHeight() == object.getY()) {
+               if (p1.getX() >= object.getX() - 10 && p1.getX() <= object.xPlusWidth() - 10) {
+                   System.out.println("from up");
+                   return 4;
+               }
+           }
+           //Collision from the right
+           if (p1.getX() == object.xPlusWidth()) {
+               if (p1.getY() >= object.getY() - 10  && p1.getY() <= object.yPlusHeight() - 10) {
+                   System.out.println("from right");
+                   return 3;
+               }
+           }
+       }
+       return 0;
+   }
 
     public void keyListener(){
         KeyboardEvent up = new KeyboardEvent();
@@ -103,7 +111,7 @@ public class Game implements KeyboardHandler {
                     return;
                 };
                 p1.moveRight(10);
-                System.out.println(p1.getPos());
+
                 break;
             case KeyboardEvent.KEY_LEFT:
                 if(collisionDetector() == 3){
@@ -113,6 +121,8 @@ public class Game implements KeyboardHandler {
                 p1.moveLeft(-10);
                 break;
         }
+        System.out.println("Player xPlusWidth X: " + p1.xPlusWidth() + " Player xPlusWitdth Y " + p1.getY());
+
     }
 
     @Override

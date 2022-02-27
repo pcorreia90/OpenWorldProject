@@ -10,7 +10,6 @@ public class World {
     public World() {
         world = new Rectangle(10,10,600,600);
         world.draw();
-        drawCells();
     }
 
     public void drawCells(){

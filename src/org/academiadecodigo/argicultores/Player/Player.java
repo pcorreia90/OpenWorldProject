@@ -8,8 +8,6 @@ public class Player implements Movable {
     private Ellipse player;
     private Position pos;
 
-
-
     public Player(int x, int y, int width, int height) {
         player = new Ellipse(x, y, width, height);
         pos = new Position(x,y);
@@ -67,6 +65,18 @@ public class Player implements Movable {
         return pixel;
     }
 
+    public int xPlusWidth() {
+        return getX() + player.getWidth();
+
+    }
+
+    public int xPlusWidthPlusHeight (){
+        return getX() + player.getWidth() + player.getHeight();
+    }
+
+    public int xPlusHeight() {
+        return getY() + player.getHeight();
+    }
 
 
     @Override
