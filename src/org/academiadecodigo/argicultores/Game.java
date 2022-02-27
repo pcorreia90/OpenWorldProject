@@ -1,6 +1,6 @@
 package org.academiadecodigo.argicultores;
 
-import org.academiadecodigo.argicultores.Movement.Position;
+
 import org.academiadecodigo.argicultores.World.GameObject;
 import org.academiadecodigo.argicultores.World.World;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
@@ -10,8 +10,7 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.argicultores.Player.Player;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+
 
 public class Game implements KeyboardHandler {
     private World world;

@@ -25,11 +25,6 @@ public class GameObject {
         return pos.getY();
     }
 
-    public int getPos(){
-        int pixel = pos.getX() + (pos.getY() * 600) - pos.getY();
-        return pixel;
-    }
-
     public int xPlusWidth() {
         return pos.getX() + rectangle.getWidth();
 
