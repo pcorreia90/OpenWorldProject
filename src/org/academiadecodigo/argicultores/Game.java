@@ -10,6 +10,10 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.argicultores.Player.Player;
 
 import java.util.ArrayList;
+import java.util.EventListener;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 
 public class Game implements KeyboardHandler {
@@ -18,46 +22,47 @@ public class Game implements KeyboardHandler {
     private Player p1;
     private GameObject obstacle;
     private ArrayList<GameObject> obstacleList = new ArrayList();
+    private boolean pressed = false;
+    private ExecutorService executor = Executors.newFixedThreadPool(1);
 
 
     public Game(){
         world = new World();
         keyboard = new Keyboard(this);
-        p1 = new Player(300,300,20,20);
-        p1.fill();
         obstacle = new GameObject(400,400);
         obstacleList.add(obstacle);
-        obstacle.fill();
+        p1 = new Player(300,300,20,20);
         keyListener();
+
     }
 
    public int collisionDetector() {
        for (GameObject object : obstacleList) {
            //Collision from the left
-           if (p1.xPlusWidth() == object.getX()) {
-               if (p1.getY() >= object.getY() - 10  && p1.getY() <= object.yPlusHeight() - 10) {
-                   System.out.println("from left");
+           if (p1.getMaxX() == object.getX()) {
+               if (p1.getMaxY() > object.getY() && p1.getMaxY() <= object.yPlusHeight()) {
                    return 1;
                }
            }
            //Collision from down
-           if (p1.getY() == object.yPlusHeight()) {
-               if (p1.getX() >= object.getX() - 10 && p1.getX() <= object.xPlusWidth() - 10) {
-                   System.out.println("from Down");
+           if (p1.getMaxY() > object.yPlusHeight()) {
+               System.out.println("i'm here");
+               if (p1.getMaxX() > object.getX() && p1.getX() < object.xPlusWidth()) {
+                   System.out.println("i'm here2");
                    return 2;
                }
            }
            //Collision from up
-           if (p1.xPlusHeight() == object.getY()) {
-               if (p1.getX() >= object.getX() - 10 && p1.getX() <= object.xPlusWidth() - 10) {
-                   System.out.println("from up");
+           if (p1.getMaxY() == object.getY()) {
+               if (p1.getMaxX() > object.getX() && p1.getX() < object.xPlusWidth()) {
+
                    return 4;
                }
            }
            //Collision from the right
            if (p1.getX() == object.xPlusWidth()) {
-               if (p1.getY() >= object.getY() - 10  && p1.getY() <= object.yPlusHeight() - 10) {
-                   System.out.println("from right");
+               if (p1.getMaxY() > object.getY() && p1.getMaxY() <= object.yPlusHeight()) {
+
                    return 3;
                }
            }
@@ -71,10 +76,20 @@ public class Game implements KeyboardHandler {
         up.setKey(KeyboardEvent.KEY_UP);
         keyboard.addEventListener(up);
 
+        KeyboardEvent upReleased = new KeyboardEvent();
+        upReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        upReleased.setKey(KeyboardEvent.KEY_UP);
+        keyboard.addEventListener(upReleased);
+
         KeyboardEvent down = new KeyboardEvent();
         down.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         down.setKey(KeyboardEvent.KEY_DOWN);
         keyboard.addEventListener(down);
+
+        KeyboardEvent downRelease = new KeyboardEvent();
+        downRelease.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        downRelease.setKey(KeyboardEvent.KEY_DOWN);
+        keyboard.addEventListener(downRelease);
 
         KeyboardEvent right = new KeyboardEvent();
         right.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
@@ -85,47 +100,59 @@ public class Game implements KeyboardHandler {
         left.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         left.setKey(KeyboardEvent.KEY_LEFT);
         keyboard.addEventListener(left);
+
+        KeyboardEvent leftReleased = new KeyboardEvent();
+        leftReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        leftReleased.setKey(KeyboardEvent.KEY_LEFT);
+        keyboard.addEventListener(leftReleased);
     }
 
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
-        switch (keyboardEvent.getKey()){
-            case KeyboardEvent.KEY_UP:
-                if(collisionDetector() == 2){
-                    p1.moveUp(0);
-                    return;
-                }
-                p1.moveUp(-10);
-                break;
-            case KeyboardEvent.KEY_DOWN:
-                if(collisionDetector() == 4){
-                    p1.moveDown(0);
-                    return;
-                }
-                p1.moveDown(10);
-                break;
-            case KeyboardEvent.KEY_RIGHT:
-                if(collisionDetector() == 1){
-                    p1.moveRight(0);
-                    return;
-                };
-                p1.moveRight(10);
+            switch (keyboardEvent.getKey()) {
+                case KeyboardEvent.KEY_UP:
+                    if (collisionDetector() == 2) {
+                        return;
+                    }
 
-                break;
-            case KeyboardEvent.KEY_LEFT:
-                if(collisionDetector() == 3){
-                    p1.moveLeft(0);
-                    return;
-                }
-                p1.moveLeft(-10);
-                break;
-        }
-        System.out.println("Player xPlusWidth X: " + p1.xPlusWidth() + " Player xPlusWitdth Y " + p1.getY());
-
+                    executor.submit(p1.moveUp());
+                    break;
+                case KeyboardEvent.KEY_DOWN:
+                    if (collisionDetector() == 4) {
+                            return;
+                        }
+                    executor.submit(p1.moveDown());
+                    break;
+                case KeyboardEvent.KEY_RIGHT:
+                    if (collisionDetector() == 1) {
+                        p1.moveRight(0);
+                        return;
+                    }
+                    p1.moveRight(5);
+                    pressed = false;
+                    break;
+                case KeyboardEvent.KEY_LEFT:
+                    if (collisionDetector() == 3) {
+                        return;
+                    }
+                    executor.submit(p1.moveLeft());
+                    break;
+            }
     }
-
     @Override
-    public void keyReleased(KeyboardEvent keyboardEvent) {
+    public void keyReleased(KeyboardEvent keyboardEvent) {;
+        switch (keyboardEvent.getKey()){
+            case KeyboardEvent.KEY_DOWN:
+                executor.shutdownNow();
+                executor = Executors.newFixedThreadPool(1);
 
+                case KeyboardEvent.KEY_UP:
+                    executor.shutdownNow();
+                    executor = Executors.newFixedThreadPool(1);
+
+                    case KeyboardEvent.KEY_LEFT:
+                        executor.shutdownNow();
+                        executor = Executors.newFixedThreadPool(1);
+        }
     }
 }

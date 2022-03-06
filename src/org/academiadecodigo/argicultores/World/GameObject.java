@@ -2,23 +2,23 @@ package org.academiadecodigo.argicultores.World;
 
 import org.academiadecodigo.argicultores.Movement.Position;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 
 public class GameObject {
     private Position pos;
-    private Rectangle rectangle;
+    private Picture object;
 
     public GameObject(int x, int y) {
         pos = new Position(x,y);
-        rectangle = new Rectangle(x,y,40,100);
+        object = new Picture(x,y,"resources/building_1.png");
+        object.draw();
+
     }
 
-    public void fill(){
-        rectangle.fill();
-    }
 
     public int getX() {
-        return pos.getX();
+        return object.getX();
     }
 
     public int getY() {
@@ -26,16 +26,16 @@ public class GameObject {
     }
 
     public int xPlusWidth() {
-        return pos.getX() + rectangle.getWidth();
+        return object.getMaxX();
 
     }
 
     public int xPlusWidthPlusHeight (){
-        return pos.getX() + rectangle.getWidth() + rectangle.getHeight();
+        return object.getMaxX() + object.getMaxY();
     }
 
     public int yPlusHeight() {
-        return getY() + rectangle.getHeight();
+        return object.getMaxY();
     }
 
 }
