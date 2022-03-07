@@ -114,7 +114,6 @@ public class Game implements KeyboardHandler {
                     if (collisionDetector() == 2) {
                         return;
                     }
-
                     executor.submit(p1.moveUp());
                     break;
                 case KeyboardEvent.KEY_DOWN:

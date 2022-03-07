@@ -1,14 +1,9 @@
 package org.academiadecodigo.argicultores.Player;
-import org.academiadecodigo.simplegraphics.graphics.Color;
-import org.academiadecodigo.simplegraphics.graphics.Ellipse;
+
 import org.academiadecodigo.simplegraphics.graphics.Movable;
 import org.academiadecodigo.argicultores.Movement.Position;
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 public class Player implements Movable, Runnable {
     private Picture player;
@@ -40,7 +35,7 @@ public class Player implements Movable, Runnable {
     }
 
     public MoveLeft moveLeft() {
-        player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Run_000.png");
+        player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_000.png");
         if (pos.getX() <= 10) {
             return null;
         }
@@ -58,11 +53,11 @@ public class Player implements Movable, Runnable {
     }
 
     public int getX() {
-        return pos.getX();
+        return player.getX();
     }
 
     public int getY() {
-        return pos.getY();
+        return player.getY();
     }
 
     public int getPos() {
@@ -304,52 +299,96 @@ public class Player implements Movable, Runnable {
         @Override
         public void run() {
             try {
-                for(int i = 0; i < 2; i++) {
-                    Thread.sleep(33);
-                    player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Run_001.png");
-                    player.translate(-1, 0);
-                    Thread.sleep(33);
-                    player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Run_002.png");
-                    player.translate(-1, 0);
-                    Thread.sleep(33);
-                    player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Run_003.png");
-                    player.translate(-1, 0);
-                    Thread.sleep(33);
-                    player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Run_004.png");
-                    player.translate(-1, 0);
-                    Thread.sleep(33);
-                    player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Run_005.png");
-                    player.translate(-1, 0);
-                    Thread.sleep(33);
-                    player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Run_006.png");
-                    player.translate(-1, 0);
-                    Thread.sleep(33);
-                    player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Run_007.png");
-                    player.translate(-1, 0);
-                    Thread.sleep(33);
-                    player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Run_008.png");
-                    player.translate(-1, 0);
-                    Thread.sleep(33);
-                    player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Run_009.png");
-                    player.translate(-1, 0);
-                    Thread.sleep(33);
-                    player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Run_010.png");
-                    player.translate(-1, 0);
-                    Thread.sleep(33);
-                    player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Run_011.png");
-                    player.translate(-1, 0);
-                    Thread.sleep(33);
-                    player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Run_012.png");
-                    player.translate(-1, 0);
-                    Thread.sleep(33);
-                    player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Run_013.png");
-                    player.translate(-1, 0);
-                    Thread.sleep(33);
-                    player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Run_014.png");
-                    player.translate(-1, 0);
-                    Thread.sleep(33);
-                }
-            } catch (InterruptedException e) {
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_001.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_002.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_003.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_004.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_005.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_006.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_007.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_008.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_009.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_010.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_011.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_012.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_013.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_014.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_015.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_016.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_017.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_018.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_019.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_020.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_021.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_022.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_023.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_024.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_025.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_026.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_027.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_028.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_029.png");
+                player.translate(-1,0);
+                Thread.sleep(33);
+                player.load("resources/Player Character/Walk/Walk Left/0_Warrior_Walk_000.png");
+                } catch (InterruptedException interruptedException) {
 
             }
 
